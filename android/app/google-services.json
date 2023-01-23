@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1044561080940",
+    "firebase_url": "https://failure-mode-effect-analysis-default-rtdb.firebaseio.com",
+    "project_id": "failure-mode-effect-analysis",
+    "storage_bucket": "failure-mode-effect-analysis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044561080940:android:c98fad3123b8168a881e49",
+        "android_client_info": {
+          "package_name": "com.ktktools.fmea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044561080940-mhudqpdpm73lkhk4s7ptanstv4aaagqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ktktools.fmea",
+            "certificate_hash": "e32124f33694bd231091a86d23ab33a615ff5628"
+          }
+        },
+        {
+          "client_id": "1044561080940-uahts3f9tv6ai0l04r094eqf13a04157.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMLoYDoYpMIXjZqBqZA3Aj-Hc_cYm7rvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044561080940-uahts3f9tv6ai0l04r094eqf13a04157.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
