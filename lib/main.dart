@@ -2,8 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fmea/screens/summary_page.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -15,18 +13,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.dark,
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(
-          brightness: Brightness.light,
-          secondary: Colors.deepOrange[300],
-          primary: Colors.teal[300],
-        ),
+              brightness: Brightness.light,
+              secondary: Colors.deepOrange[300],
+              primary: Colors.teal[300],
+            ),
       ),
-
       home: const SummaryPage(),
     );
   }

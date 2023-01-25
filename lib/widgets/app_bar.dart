@@ -9,7 +9,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final List<IconButton> customAction;
   const AppBarWidget({
     Key? key,
-    required this.title, required this.customAction,
+    required this.title,
+    required this.customAction,
   }) : super(key: key);
 
   @override
@@ -52,8 +53,9 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.info),
       ),
     ];
-    customAction.isNotEmpty? actionList=customAction : null;
-    return AppBar(title: Text(title),
+    customAction.isNotEmpty ? actionList = customAction : null;
+    return AppBar(
+        title: Text(title),
         //centerTitle: true,
         //backgroundColor: Colors.amber,
         actions: actionList);

@@ -1,11 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 
 class ButtonRow extends StatefulWidget {
   final String lbl;
   final Function? onpressed;
-  const ButtonRow({Key? key, required this.lbl, this.onpressed}) : super(key: key);
+  const ButtonRow({Key? key, required this.lbl, this.onpressed})
+      : super(key: key);
 
   @override
   State<ButtonRow> createState() => _ButtonRowState();

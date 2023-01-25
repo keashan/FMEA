@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-itemColor(index) {
-  final cardcolors = [
-    Colors.amber.shade300,
-    Colors.blue.shade300,
-    Colors.teal.shade300,
-    Colors.deepOrange.shade300,
-    Colors.deepPurple.shade300,
-    Colors.green.shade300,
-  ];
-  return cardcolors[index % cardcolors.length];
+itemColor(fs) {
+  int r = 255;
+  int g = 0;
+  int b = 0;
+  double a = 100;
+  if (fs.toString().isNotEmpty){
+    r = int.parse(fs)*255~/100 ;
+    g = 255 - r;
+    //a=double.parse(fs);
+  }
+  return Color.fromRGBO(r, g, b, a);
 }

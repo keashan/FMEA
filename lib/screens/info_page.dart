@@ -13,7 +13,10 @@ class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: AppBarWidget(title: "About Us", customAction: [],),
+      appBar: AppBarWidget(
+        title: "About Us",
+        customAction: [],
+      ),
       body: Center(
         child: Text('About Us'),
       ),

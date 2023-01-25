@@ -8,6 +8,9 @@ class DetailRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
-        child: Text(lbl, style: const TextStyle(color: Colors.black, fontSize: 24),));
+        child: Text(
+          lbl,
+          style: const TextStyle(color: Colors.black, fontSize: 24),
+        ));
   }
 }

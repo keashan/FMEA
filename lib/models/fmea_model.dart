@@ -1,4 +1,4 @@
-class FMEA{
+class FMEA {
   String? key;
   FMEAData? fmeaData;
 
@@ -8,7 +8,7 @@ class FMEA{
   });
 }
 
-class FMEAData{
+class FMEAData {
   String? section;
   String? machine;
   String? problemOccured;
@@ -45,7 +45,7 @@ class FMEAData{
     this.remarks,
   });
 
-  FMEAData.fromJson(Map<dynamic, dynamic> json){
+  FMEAData.fromJson(Map<dynamic, dynamic> json) {
     section = json['section'];
     machine = json['machine'];
     problemOccured = json['problemoccurred'];

@@ -13,7 +13,10 @@ class _HelpPageState extends State<HelpPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: AppBarWidget(title: "Help", customAction: [],),
+      appBar: AppBarWidget(
+        title: "Help",
+        customAction: [],
+      ),
       body: Center(
         child: Text('Help'),
       ),

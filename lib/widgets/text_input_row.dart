@@ -8,7 +8,13 @@ class TextInputRowWidget extends StatelessWidget {
   final TextEditingController controller;
   final Function? onchanged;
   const TextInputRowWidget({
-    Key? key, required this.lbl, required this.hint, required this.lines, required this.keytype, required this.controller, this.onchanged,
+    Key? key,
+    required this.lbl,
+    required this.hint,
+    required this.lines,
+    required this.keytype,
+    required this.controller,
+    this.onchanged,
   }) : super(key: key);
 
   @override
@@ -33,7 +39,8 @@ class TextInputRowWidget extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: hint,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
               ),
               maxLines: lines,
               controller: controller,
@@ -50,4 +57,3 @@ class TextInputRowWidget extends StatelessWidget {
     );
   }
 }
-

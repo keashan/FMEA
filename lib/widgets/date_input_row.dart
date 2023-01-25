@@ -8,7 +8,12 @@ class DateInputRowWidget extends StatefulWidget {
   final TextInputType keytype;
   final TextEditingController dateController;
   const DateInputRowWidget({
-    Key? key, required this.lbl, required this.hint, required this.lines, required this.keytype, required this.dateController,
+    Key? key,
+    required this.lbl,
+    required this.hint,
+    required this.lines,
+    required this.keytype,
+    required this.dateController,
   }) : super(key: key);
 
   @override
@@ -22,14 +27,13 @@ class _DateInputRowWidgetState extends State<DateInputRowWidget> {
         initialDate: DateTime.now(),
         firstDate: DateTime(2020),
         lastDate: DateTime(2100)) as DateTime;
-    if (pickedDate != null){
+    if (pickedDate != null) {
       String formattedDate = DateFormat("yyyy-MM-dd").format(pickedDate);
       setState(() {
-        widget.dateController.text =formattedDate;
+        widget.dateController.text = formattedDate;
         FocusScope.of(context).unfocus();
       });
-    }
-    else{
+    } else {
       print("Date is not selected");
     }
   }
@@ -55,7 +59,8 @@ class _DateInputRowWidgetState extends State<DateInputRowWidget> {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: widget.hint,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
               ),
               keyboardType: widget.keytype,
               maxLines: widget.lines,
