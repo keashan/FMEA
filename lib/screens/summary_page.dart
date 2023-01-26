@@ -16,6 +16,7 @@ class SummaryPage extends StatefulWidget {
 
 class _SummaryPageState extends State<SummaryPage> {
   List<FMEA> fmeaList = [];
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -32,17 +33,19 @@ class _SummaryPageState extends State<SummaryPage> {
           customAction: [],
         ),
         body: Center(
-            child: fmeaList.isEmpty
-                ? const Center(
-                    child: Text(
-                      "No Records to Display.",
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.deepOrange,
-                      ),
-                    ),
-                  )
-                : buildFMEA()),
+            child: isLoading
+                ? const CircularProgressIndicator()
+                : fmeaList.isEmpty
+                    ? const Center(
+                        child: Text(
+                          "No Records to Display.",
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                      )
+                    : buildFMEA()),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
@@ -60,11 +63,13 @@ class _SummaryPageState extends State<SummaryPage> {
 
   void getFMEAData() async {
     DatabaseReference dbRef = FirebaseDatabase.instance.ref();
+    isLoading = true;
     dbRef.child("FMEA").child("KTKTools").onChildAdded.listen((data) {
       FMEAData fmeaData = FMEAData.fromJson(data.snapshot.value as Map);
       FMEA fmea = FMEA(key: data.snapshot.key, fmeaData: fmeaData);
       fmeaList.add(fmea);
       setState(() {});
+      isLoading = false;
     });
   }
 
