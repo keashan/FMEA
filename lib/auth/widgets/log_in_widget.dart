@@ -2,14 +2,17 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fmea/auth/provider.dart';
 import 'package:fmea/auth/screens/reset_password_page.dart';
 import 'package:fmea/main.dart';
 import 'package:fmea/widgets/utils_widget.dart';
+import 'package:provider/provider.dart';
 
 class LogInWidget extends StatefulWidget {
   final VoidCallback onClickedSignUp;
 
-  const LogInWidget({Key? key, required this.onClickedSignUp}) : super(key: key);
+  const LogInWidget({Key? key, required this.onClickedSignUp})
+      : super(key: key);
 
   @override
   State<LogInWidget> createState() => _LogInWidgetState();
@@ -19,6 +22,13 @@ class _LogInWidgetState extends State<LogInWidget> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  late bool isVisible;
+
+  @override
+  void initState() {
+    isVisible = false;
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -54,24 +64,33 @@ class _LogInWidgetState extends State<LogInWidget> {
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (email) =>
-                        email != null && !EmailValidator.validate(email)
-                            ? "Please enter a valid email"
-                            : null,
+                          email != null && !EmailValidator.validate(email)
+                              ? "Please enter a valid email"
+                              : null,
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      obscureText: true,
+                      obscureText: !isVisible,
                       controller: passwordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: "Password",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(Icons.visibility_off),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isVisible ? Icons.visibility : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isVisible = !isVisible;
+                            });
+                          },
+                        ),
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (password) =>
-                        password != null && password.length < 6
-                            ? "Password must be at least 6 characters"
-                            : null,
+                          password != null && password.length < 6
+                              ? "Password must be at least 6 characters"
+                              : null,
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton.icon(
@@ -90,10 +109,35 @@ class _LogInWidgetState extends State<LogInWidget> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const   ResetPasswordPage(),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        final provider = Provider.of<GoogleSignInProvider>(
+                            context,
+                            listen: false);
+                        provider.googleLogin();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(50),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 20),
+                        backgroundColor: Colors.red[600],
                       ),
+                      icon: const Icon(
+                        Icons.login,
+                      ),
+                      label: const Text(
+                        "Sign In With Google",
+                        style: TextStyle(
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ResetPasswordPage(),
+                        ),
                       ),
                       child: Text(
                         "Forgot Password?",
@@ -102,8 +146,8 @@ class _LogInWidgetState extends State<LogInWidget> {
                           fontSize: 18,
                           color: Theme.of(context).colorScheme.primary,
                         ),
-                        ),
                       ),
+                    ),
                     const SizedBox(height: 20),
                     RichText(
                       text: TextSpan(
@@ -151,7 +195,7 @@ class _LogInWidgetState extends State<LogInWidget> {
     );
 
     try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );

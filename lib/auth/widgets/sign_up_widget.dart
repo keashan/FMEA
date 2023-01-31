@@ -22,6 +22,15 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
+  late bool isPasswordVisible;
+  late bool isConfirmPasswordVisible;
+
+  void initState() {
+    isPasswordVisible = false;
+    isConfirmPasswordVisible = false;
+    super.initState();
+  }
+
   @override
   void dispose() {
     emailController.dispose();
@@ -62,12 +71,21 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      obscureText: true,
+                      obscureText: !isPasswordVisible,
                       controller: passwordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: "Password",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(Icons.visibility_off),
+                        suffixIcon: IconButton(
+                          icon: Icon(isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              isPasswordVisible = !isPasswordVisible;
+                            });
+                          },
+                        ),
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (password) =>
@@ -77,12 +95,21 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      obscureText: true,
+                      obscureText: !isConfirmPasswordVisible,
                       controller: confirmPasswordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: "Confirm Password",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: Icon(Icons.visibility_off),
+                        suffixIcon: IconButton(
+                          icon: Icon(isConfirmPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              isConfirmPasswordVisible = !isConfirmPasswordVisible;
+                            });
+                          },
+                        ),
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (confirmpassword) => confirmpassword != null &&

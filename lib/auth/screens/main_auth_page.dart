@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fmea/screens/summary_page.dart';
-import 'package:fmea/screens/auth_page.dart';
-import 'package:fmea/screens/verify_email_page.dart';
+import 'package:fmea/auth/screens/auth_page.dart';
+import 'package:fmea/auth/screens/verify_email_page.dart';
+
 
 class MainAuthPage extends StatefulWidget {
   const MainAuthPage({Key? key}) : super(key: key);
