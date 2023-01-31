@@ -2,9 +2,11 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fmea/auth/provider.dart';
 import 'package:fmea/auth/screens/reset_password_page.dart';
 import 'package:fmea/main.dart';
 import 'package:fmea/widgets/utils_widget.dart';
+import 'package:provider/provider.dart';
 
 class LogInWidget extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -88,6 +90,27 @@ class _LogInWidgetState extends State<LogInWidget> {
                           fontSize: 24,
                         ),
                       ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      onPressed: (){
+                        final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+                        provider.googleLogin();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(50),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 20),
+                        backgroundColor: Colors.red[600],
+                      ),
+                      icon: const Icon(Icons.login,),
+                      label: const Text(
+                        "Sign In With Google",
+                        style: TextStyle(
+                          fontSize: 24,
+                        ),
+                      ),
+
                     ),
                     const SizedBox(height: 20),
                     GestureDetector(

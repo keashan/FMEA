@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:fmea/auth/provider.dart';
+import 'package:provider/provider.dart';
 import '../screens/help_page.dart';
 import '../screens/info_page.dart';
 import '../screens/settings_page.dart';
@@ -54,10 +55,17 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.info),
       ),
       IconButton(
-        onPressed: (){
-          FirebaseAuth.instance.signOut();
+        onPressed: () async {
+          final provider =
+              Provider.of<GoogleSignInProvider>(context, listen: false);
+          if (provider.isSignedIn) {
+            await provider.logout();
+          } else {
+            FirebaseAuth.instance.signOut();
+          }
         },
-        icon: const Icon(Icons.logout),)
+        icon: const Icon(Icons.logout),
+      )
     ];
     customAction.isNotEmpty ? actionList = customAction : null;
     return AppBar(

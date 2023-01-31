@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fmea/widgets/app_bar.dart';
 import 'package:fmea/widgets/utils_widget.dart';
 
 class ResetPasswordPage extends StatefulWidget {
@@ -12,7 +11,6 @@ class ResetPasswordPage extends StatefulWidget {
 }
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
-  // final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
 
   @override
