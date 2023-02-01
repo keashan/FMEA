@@ -9,10 +9,11 @@ import 'package:fmea/widgets/detail_page_row.dart';
 class DetailPage extends StatefulWidget {
   final int index;
   final List fmeaList;
+  final String status;
   const DetailPage({
     Key? key,
     required this.index,
-    required this.fmeaList,
+    required this.fmeaList, required this.status,
   }) : super(key: key);
 
   @override

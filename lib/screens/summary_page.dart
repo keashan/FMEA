@@ -16,12 +16,16 @@ class SummaryPage extends StatefulWidget {
 
 class _SummaryPageState extends State<SummaryPage> {
   List<FMEA> fmeaList = [];
+  List<FMEA> filteredFmeaList = [];
   bool isLoading = true;
+  late String selection;
 
   @override
   void initState() {
     super.initState();
+    selection = "all";
     getFMEAData();
+    filterFMEAList("all");
   }
 
   @override
@@ -33,19 +37,75 @@ class _SummaryPageState extends State<SummaryPage> {
           customAction: [],
         ),
         body: Center(
-            child: isLoading
-                ? const CircularProgressIndicator()
-                : fmeaList.isEmpty
-                    ? const Center(
-                        child: Text(
-                          "No Records to Display.",
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.deepOrange,
-                          ),
+          child: isLoading
+              ? const CircularProgressIndicator()
+              : fmeaList.isEmpty
+                  ? const Center(
+                      child: Text(
+                        "No Records to Display.",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.deepOrange,
                         ),
-                      )
-                    : buildFMEA()),
+                      ),
+                    )
+                  : Column(
+                      children: [
+                        Row(
+                          children: [
+                            Radio(
+                              value: "all",
+                              focusNode: FocusNode(),
+                              groupValue: selection,
+                              onChanged: (value) {
+                                setState(() {
+                                  selection = value.toString();
+                                  filterFMEAList(selection);
+                                });
+                              },
+                            ),
+                            const Text(
+                              "All",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Radio(
+                              value: "completed",
+                              groupValue: selection,
+                              onChanged: (value) {
+                                setState(() {
+                                  selection = value.toString();
+                                  filterFMEAList(selection);
+                                });
+                              },
+                            ),
+                            const Text(
+                              "Completed",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Radio(
+                              value: "pending",
+                              groupValue: selection,
+                              onChanged: (value) {
+                                setState(
+                                  () {
+                                    selection = value.toString();
+                                    filterFMEAList(selection);
+                                  },
+                                );
+                              },
+                            ),
+                            const Text(
+                              "Pending",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: buildFMEA(selection),
+                        ),
+                      ],
+                    ),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
@@ -61,6 +121,20 @@ class _SummaryPageState extends State<SummaryPage> {
         ));
   }
 
+  void filterFMEAList(String? selection) {
+    if (selection == "all") {
+      filteredFmeaList = fmeaList;
+    } else if (selection == "completed") {
+      filteredFmeaList = fmeaList
+          .where((element) => element.fmeaData?.status == "Completed")
+          .toList();
+    } else if (selection == "pending") {
+      filteredFmeaList = fmeaList
+          .where((element) => element.fmeaData?.status == "Pending")
+          .toList();
+    }
+  }
+
   void getFMEAData() async {
     DatabaseReference dbRef = FirebaseDatabase.instance.ref();
     isLoading = true;
@@ -73,14 +147,14 @@ class _SummaryPageState extends State<SummaryPage> {
     });
   }
 
-  Widget buildFMEA() => StaggeredGridView.countBuilder(
-        itemCount: fmeaList.length,
+  Widget buildFMEA(String? selection) => StaggeredGridView.countBuilder(
+        itemCount: filteredFmeaList.length,
         staggeredTileBuilder: (int index) => const StaggeredTile.fit(2),
         crossAxisCount: 4,
         mainAxisSpacing: 4.0,
         crossAxisSpacing: 4.0,
         itemBuilder: (context, index) {
-          final fmea = fmeaList[index];
+          final fmea = filteredFmeaList[index];
           return GestureDetector(
             onTap: () async {
               await Navigator.push(
@@ -88,10 +162,13 @@ class _SummaryPageState extends State<SummaryPage> {
                 MaterialPageRoute(
                     builder: (context) => DetailPage(
                           index: index,
-                          fmeaList: fmeaList,
+                          fmeaList: filteredFmeaList,
+                          status: selection!,
                         )),
               ).then((value) {
-                setState(() {});
+                setState(() {
+                  filterFMEAList(selection);
+                });
               });
             },
             child: ItemCard(
