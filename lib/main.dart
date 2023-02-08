@@ -26,10 +26,17 @@ class MyApp extends StatelessWidget {
           scaffoldMessengerKey: Utils.messengerKey,
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
-          themeMode: ThemeMode.dark,
+          themeMode: ThemeMode.light,
           theme: ThemeData().copyWith(
             colorScheme: ThemeData(useMaterial3: true,).colorScheme.copyWith(
                   brightness: Brightness.light,
+                  secondary: Colors.deepOrange[300],
+                  primary: Colors.teal[300],
+                ),
+          ),
+          darkTheme: ThemeData().copyWith(
+            colorScheme: ThemeData(useMaterial3: true,).colorScheme.copyWith(
+                  brightness: Brightness.dark,
                   secondary: Colors.deepOrange[300],
                   primary: Colors.teal[300],
                 ),

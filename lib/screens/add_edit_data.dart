@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fmea/models/fmea_model.dart';
 import 'package:fmea/widgets/date_input_row.dart';
+import 'package:fmea/widgets/drop_down_row.dart';
 import 'package:fmea/widgets/text_input_row.dart';
 
 import '../widgets/app_bar.dart';
@@ -37,8 +38,9 @@ class _AddEditDataPageState extends State<AddEditDataPage> {
   TextEditingController preventiveAction = TextEditingController();
   TextEditingController dueDate = TextEditingController();
   TextEditingController responsible = TextEditingController();
-  TextEditingController status = TextEditingController();
   TextEditingController remarks = TextEditingController();
+
+  String status = "Open";
 
   @override
   void dispose() {
@@ -55,7 +57,6 @@ class _AddEditDataPageState extends State<AddEditDataPage> {
     correctiveAction.dispose();
     preventiveAction.dispose();
     dueDate.dispose();
-    status.dispose();
     remarks.dispose();
     super.dispose();
   }
@@ -75,7 +76,9 @@ class _AddEditDataPageState extends State<AddEditDataPage> {
     preventiveAction.text = widget.item.preventiveAction.toString();
     dueDate.text = widget.item.dueDate.toString();
     responsible.text = widget.item.responsible.toString();
-    status.text = widget.item.status.toString();
+    status = widget.item.status.toString() == ""
+        ? "Open"
+        : widget.item.status.toString();
     remarks.text = widget.item.remarks.toString();
   }
 
@@ -119,7 +122,7 @@ class _AddEditDataPageState extends State<AddEditDataPage> {
     widget.item.preventiveAction = preventiveAction.text;
     widget.item.dueDate = dueDate.text;
     widget.item.responsible = responsible.text;
-    widget.item.status = status.text;
+    widget.item.status = status;
     widget.item.remarks = remarks.text;
     Map<String, dynamic> data = {
       "section": section.text,
@@ -136,7 +139,7 @@ class _AddEditDataPageState extends State<AddEditDataPage> {
       "preventiveaction": preventiveAction.text,
       "duedate": dueDate.text,
       "responsible": responsible.text,
-      "status": status.text,
+      "status": status,
       "remarks": remarks.text,
     };
     if (widget.isEdit) {
@@ -162,16 +165,21 @@ class _AddEditDataPageState extends State<AddEditDataPage> {
     preventiveAction.clear();
     dueDate.clear();
     responsible.clear();
-    status.clear();
+    status = "Open";
     remarks.clear();
     FocusScope.of(context).unfocus();
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     if (widget.isEdit) {
       asignData();
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Colors.lime,
       appBar: AppBarWidget(
@@ -291,12 +299,17 @@ class _AddEditDataPageState extends State<AddEditDataPage> {
                       lines: 1,
                       keytype: TextInputType.text,
                       controller: responsible),
-                  TextInputRowWidget(
-                      lbl: "Status",
-                      hint: "type here",
-                      lines: 1,
-                      keytype: TextInputType.text,
-                      controller: status),
+                  DropDownRowWidget(
+                    lbl: "Status",
+                    status: status,
+                    onchanged: (value) {
+                      if (mounted) {
+                        setState(() {
+                          status = value;
+                        });
+                      }
+                    },
+                  ),
                   TextInputRowWidget(
                       lbl: "Remarks",
                       hint: "type here",

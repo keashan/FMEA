@@ -69,7 +69,7 @@ class _SummaryPageState extends State<SummaryPage> {
                               style: TextStyle(fontSize: 18),
                             ),
                             Radio(
-                              value: "completed",
+                              value: "closed",
                               groupValue: selection,
                               onChanged: (value) {
                                 setState(() {
@@ -79,11 +79,11 @@ class _SummaryPageState extends State<SummaryPage> {
                               },
                             ),
                             const Text(
-                              "Completed",
+                              "Closed",
                               style: TextStyle(fontSize: 18),
                             ),
                             Radio(
-                              value: "pending",
+                              value: "open",
                               groupValue: selection,
                               onChanged: (value) {
                                 setState(
@@ -95,7 +95,7 @@ class _SummaryPageState extends State<SummaryPage> {
                               },
                             ),
                             const Text(
-                              "Pending",
+                              "Open",
                               style: TextStyle(fontSize: 18),
                             ),
                           ],
@@ -124,13 +124,13 @@ class _SummaryPageState extends State<SummaryPage> {
   void filterFMEAList(String? selection) {
     if (selection == "all") {
       filteredFmeaList = fmeaList;
-    } else if (selection == "completed") {
+    } else if (selection == "closed") {
       filteredFmeaList = fmeaList
-          .where((element) => element.fmeaData?.status == "Completed")
+          .where((element) => element.fmeaData?.status == "Closed")
           .toList();
-    } else if (selection == "pending") {
+    } else if (selection == "open") {
       filteredFmeaList = fmeaList
-          .where((element) => element.fmeaData?.status == "Pending")
+          .where((element) => element.fmeaData?.status == "Open")
           .toList();
     }
   }
